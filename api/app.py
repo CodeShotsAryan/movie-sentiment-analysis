@@ -3,25 +3,27 @@
 #   jsonify coverts data to json format for response 
 #   pickle  used for loading machine learning model 
 #   os used to manipulate with os for file operations 
-from flask import Flask , request , jsonify  
-import pickle 
+# api/app.py
+
+from flask import Flask, request, jsonify
+import pickle
 import os
 
-app = Flask(__name__) 
+app = Flask(__name__)
 
-#load the machine learning model 
+# Load the model and vectorizer
+model_path = os.path.join('model', 'model.pkl')
+with open(model_path, 'rb') as f:
+    vectorizer, model = pickle.load(f)
 
-model_path = os.path.join('model','model.pkl')
-with open(model_path,'rb') as f :
-    model = pickle.load(f)
-
-# define prediciton endpoints ok ?
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json
-    features = data['features']
-    prediction = model.predict([features])
-    return jsonify({'prediction': prediction.tolist()})
+    review = data['review']
+    features = vectorizer.transform([review])
+    prediction = model.predict(features)
+    sentiment = 'positive' if prediction[0] == 1 else 'negative'
+    return jsonify({'sentiment': sentiment})
 
 if __name__ == '__main__':
     app.run(debug=True)
