@@ -4,12 +4,16 @@
 #   pickle  used for loading machine learning model 
 #   os used to manipulate with os for file operations 
 # api/app.py
-
+# Importing necessary modules
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS for handling cross-origin requests
 import pickle
 import os
 
 app = Flask(__name__)
+
+# Enable CORS for the /predict route only from http://localhost:3000
+CORS(app, resources={r"/predict": {"origins": "*"}})
 
 # Load the model and vectorizer
 model_path = os.path.join('model', 'model.pkl')
@@ -26,4 +30,5 @@ def predict():
     return jsonify({'sentiment': sentiment})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Run the app on all available IPs on port 5000
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -4,7 +4,6 @@
 # RandomForestClassifier  A machine learning model from scikit-learn used for classification 
 # pickle a py module for serializing and deserializing python objects (saving and model models)
 # ml/train_model.py
-
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -12,25 +11,29 @@ from sklearn.naive_bayes import MultinomialNB
 import pickle
 
 # Load your dataset
-
-# Example: df = pd.read_csv('movie_reviews.csv')
-
-# df should have columns 'review' and 'sentiment'
-
-# Sample data (replace with actual data loading)
-def load_data():
-    data = {
-        'review': ["I loved this movie", "I hated this movie", "It was okay", "Amazing film", "Worst movie ever"],
-        'sentiment': [1, 0, 1, 1, 0]  # 1 for positive, 0 for negative
-    }
-    return pd.DataFrame(data)
+def load_data(file_path='movie_reviews.csv'):
+    try:
+        df = pd.read_csv(file_path)
+        return df
+    except pd.errors.EmptyDataError:
+        print(f"Error: The file {file_path} is empty or does not contain valid data.")
+        return pd.DataFrame()  # Return an empty DataFrame
 
 df = load_data()
+if df.empty:
+    print("No data loaded. Exiting.")
+    exit()
+
+# Ensure columns are present
+if 'review' not in df.columns or 'sentiment' not in df.columns:
+    print("Dataset must contain 'review' and 'sentiment' columns.")
+    exit()
+
 X = df['review']
 y = df['sentiment']
 
 # Convert text data to feature vectors
-vectorizer = TfidfVectorizer()
+vectorizer = TfidfVectorizer(stop_words='english')  # Added stop words removal
 X_features = vectorizer.fit_transform(X)
 
 # Split data
