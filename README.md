@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Sentiment Analysis on Movie Reviews
 
-## Getting Started
+Overview
+This project implements a sentiment analysis tool to classify movie reviews as either positive or negative. It uses a Naive Bayes classifier with TF-IDF vectorization for text data processing. The solution includes a Flask API backend and a React frontend styled with Tailwind CSS.
 
-First, run the development server:
+Project Structure
+api/: Contains the Flask API for sentiment prediction.
+app.py: Flask application with an endpoint for sentiment prediction.
+ml/: Contains scripts for training the sentiment analysis model.
+train_model.py: Script to train and save the machine learning model.
+frontend/: Contains the React application for the user interface.
+pages/: React pages including the main prediction interface.
+Features
+Backend:
+Flask API serving the trained sentiment analysis model.
+Predicts sentiment based on user input.
+Frontend:
+React application with Tailwind CSS for a clean and responsive UI.
+Allows users to input movie reviews and view sentiment predictions.
+Setup Instructions
+Backend (Flask API)
+Install Dependencies:
 
-```bash
+bash
+Copy code
+pip install flask flask-cors scikit-learn pandas numpy
+Run the Flask API:
+
+bash
+Copy code
+python api/app.py
+The API will be available at http://localhost:5000.
+
+Frontend (React)
+Install Dependencies:
+
+bash
+Copy code
+npm install
+Start the React Application:
+
+bash
+Copy code
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application will be available at http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Training the Model
+Prepare the Dataset: Place your CSV file with movie reviews in the ml/ directory.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Train the Model:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+bash
+Copy code
+python ml/train_model.py
+This script will generate a model.pkl file in the ml/ directory.
 
-## Learn More
+Basic Glimpse :-
+![alt text](image.png)
+![alt text](image-1.png)
+Usage
+Enter a Movie Review: Use the React frontend to input a movie review.
+Get Sentiment Prediction: Click the "Predict" button to receive the sentiment analysis result from the Flask API.
+Contributing
+Contributions are welcome! To contribute:
 
-To learn more about Next.js, take a look at the following resources:
+Fork the repository.
+Create a new branch (git checkout -b feature/YourFeature).
+Commit your changes (git commit -am 'Add new feature').
+Push to the branch (git push origin feature/YourFeature).
+Create a new Pull Request.
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Acknowledgements
+Scikit-learn: For machine learning tools.
+Flask: For the web framework.
+React: For the frontend framework.
+Tailwind CSS: For styling.
